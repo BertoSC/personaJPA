@@ -1,25 +1,25 @@
 package org.example;
 
 public enum Sexo {
-    HOMBRE("H"), MUJER("M");
+    HOMBRE('H'), MUJER('M');
 
-    String sexoCadena;
+    Character sexoCadena;
 
     Sexo(){}
 
-    Sexo(String sexoCadena) {
+    Sexo(Character sexoCadena) {
         this.sexoCadena = sexoCadena;
     }
 
-    public String getSexoCadena() {
+    public Character getSexoCadena() {
         return sexoCadena;
     }
 
-    public void setSexoCadena(String sexoCadena) {
+    public void setSexoCadena(Character sexoCadena) {
         this.sexoCadena = sexoCadena;
     }
 
-    public Sexo getSexo(String sexoCadena){
+    public Sexo getSexo(Character sexoCadena){
         for (Sexo sex: Sexo.values()){
             if (sex.getSexoCadena().equals(sexoCadena)){
                 return sex;

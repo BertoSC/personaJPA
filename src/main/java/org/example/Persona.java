@@ -3,7 +3,10 @@ package org.example;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 @Entity
+@Access(AccessType.FIELD)
 public class Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +15,11 @@ public class Persona {
     private String nombre;
     @Transient
     private String apellidos;
+
+    @Basic
+    private int edad;
+
+    @Transient
     private LocalDate fechaNacimiento;
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
@@ -81,6 +89,10 @@ public class Persona {
         return nombreCompl;
     }
 
+    public void setNombreCompleto(String nombreCompleto) {
+        // Setter vacío, necesario para Hibernate
+    }
+
     public String convertirMayus(String palabra){
         String primMayus= palabra.replaceFirst(String.valueOf(palabra.charAt(0)), String.valueOf(palabra.charAt(0)).toUpperCase());
         return primMayus;
@@ -94,6 +106,24 @@ public class Persona {
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+
+    @PrePersist
+    public void obtenerEdad(){
+        if (fechaNacimiento!=null) {
+            int ed = (int) ChronoUnit.YEARS.between(fechaNacimiento, LocalDate.now());
+            this.edad = ed;
+        } else {
+            throw new IllegalStateException();
+        }
+    }
+
+    @PostLoad
+    public void obtenerFecha(){
+        if (edad>0){
+            this.fechaNacimiento=LocalDate.now().minusYears(edad);
+        }
+    }
+
 
     public String getNombre() {
         return nombre;
