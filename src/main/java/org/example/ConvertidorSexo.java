@@ -15,7 +15,7 @@ public class ConvertidorSexo implements AttributeConverter <Sexo, Character> {
     @Override
     public Sexo convertToEntityAttribute(Character character) {
         for (Sexo sex: Sexo.values()){
-            if (sex.getSexoCadena()==character){
+            if (sex.getSexoCadena().equals(character)){
                 return sex;
             }
         }
