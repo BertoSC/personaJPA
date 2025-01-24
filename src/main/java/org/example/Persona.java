@@ -21,7 +21,7 @@ public class Persona {
 
     @Transient
     private LocalDate fechaNacimiento;
-    @Convert
+    @Enumerated(EnumType.STRING)
     private Sexo sexo;
     @Enumerated(EnumType.STRING)
     private EstadoCivil estadoCivil;
