@@ -8,8 +8,15 @@ import java.time.temporal.ChronoUnit;
 @Entity
 @Access(AccessType.FIELD)
 public class Persona {
+    @TableGenerator(name="Persona_Gen",
+            table="LONG_ID_GEN",
+            pkColumnName="nomePK",
+            valueColumnName="valorPK",
+            pkColumnValue="PERSONA_ID",
+            initialValue=10000,
+            allocationSize=100)
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "Persona_Gen")
     private long idPersona;
     @Transient
     private String nombre;
@@ -156,8 +163,5 @@ public class Persona {
     public void setFoto(byte[] foto) {
         this.foto = foto;
     }
-
-
-
 
 }
